@@ -1,68 +1,40 @@
-console.log(`Plants Lab:`);
+// Part 1: Fizz Buzz
 
-//PI
-const PI = 3.1415;
-//Radius of growing area in the garden
-const radius = 5;
-//How much space growing area in the garden
-const area = PI * radius * radius;
-//Minimun Single Plant Takes (in square meters)
-const minPlantSpace = 0.8;
-// starting number of plants
-const startingPlants = 20;
-// How many planst can fit in the area of thegarden
-const capacity = area / minPlantSpace;
-// 80% of MAX capacity
-const eightyPercentofMax = capacity * 0.8;
-console.log('80% of Capacity', eightyPercentofMax);
-// 50% of MAX capacity
-const fiftyPercentofMax = capacity * 0.5;
-console.log('80% of Capacity', eightyPercentofMax);
+// To begin, solve the following classic “Fizz Buzz” problem. There are a few different ways to do this - experiment with what you think is the most efficient. 
+// Once you have solved the problem, ask yourself if there could be another way; and if so, would it be better.
 
-console.log('Area: ', area);
-console.log('Capacity: ', capacity);
-console.log(`80% of Capacity:`, eightyPercentofMax);
-console.log(`50% of Capacity:`, fiftyPercentofMax);
+// Accomplish the following:
 
-// What is the number of plants after 1 week (it doubles asfter one week)
-let totalNumberofPlants = startingPlants * 2;
-console.log(`Number of plants after 1 week: `, totalNumberofPlants);
+// - Loop through all numbers from 1 to 100.
+// - If a number is divisible by 3, log “Fizz.”
+// - If a number is divisible by 5, log “Buzz.”
+// - If a number is divisible by both 3 and 5, log “Fizz Buzz.”
+// - If a number is not divisible by either 3 or 5, log the number.
+
+//Defined three variables
+let A = "Fizz";
+let B = "Buzz";
+let C = "Fizz Buzz";
+
+// for (let i = 1; i<=100; i++) {
+//     if (i % 3 === 0 && i % 5 === 0) 
+//         console.log(i, A, B); {
+
+// OR Statement
+
+// } else if (!(i % 3 === 0 || i % 5 === 0)) {
+//         console.log(i);
+//     }
 
 
-// Note: After 1, week
-
-if (totalNumberofPlants > eightyPercentofMax) {
-// Pruned, to stop them from exceeding the capacity of the 
-// garden. This condition should be met if the plant count 
-// after the iven number of weeks is greater than 80% of 
-// the maximum capacity of the garden.
-    console.log('Prune. Too many plants...')
-} else if (totalNumberofPlants >= fiftyPercentofMax && totalNumberofPlants <= fiftyPercentofMax) {
-// Monitored, if they are growing at an acceptable rate.
-// This condition should be met if the plant count is between 
-// 50% and 80% of the maximum capacity of the garden after the 
-// given number of weeks.
-    console.log('Monitor. Acceptable rate of growth')
-// Planted, if there is room to plant more plants. This condition 
-// should be met if the plant count after the given number of weeks 
-// is less than 50% of the maximum capacity of the garden.Within 
-// your submission, include the results for 1, 2, and 3 weeks 
-// of growth as inputs.
-} else {
-    console.log('Planted')
+for (let i = 1; i <= 100; i++) {
+    if (i % 3 === 0 && i % 5 === 0) {
+        console.log(i, C);
+    } else if (i % 3 === 0) {
+        console.log(i, A);
+    } else if (i % 5 === 0) {
+        console.log(i, B);
+    } else if (!(i % 3 === 0 || i % 5 === 0)) {
+        console.log(i);
+    }
 }
-
-// How many plants after 2 weeks
-toltalNumberofPlants = totalNumberofPlants * 2
-console.log(`Number of plants after 2 week: `, totalNumberofPlants)
-
-// How many plants after 3 weeks
-toltalNumberofPlants = totalNumberofPlants * 2
-console.log(`Number of plants after 3 week: `, totalNumberofPlants);
-
-
-
-
-
-
-
