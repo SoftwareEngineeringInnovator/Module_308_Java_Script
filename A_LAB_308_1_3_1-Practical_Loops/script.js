@@ -14,18 +14,19 @@
 //Defined three variables
 let A = "Fizz";
 let B = "Buzz";
-let C = "Fizz Buzz";
+let C = "Fizz-Buzz";
 
+// AND Statement
 // for (let i = 1; i<=100; i++) {
-//     if (i % 3 === 0 && i % 5 === 0) 
-//         console.log(i, A, B); {
+//     if (i % 3 === 0 && i % 5 === 0) {
+//         console.log(i, C); 
 
 // OR Statement
 
 // } else if (!(i % 3 === 0 || i % 5 === 0)) {
 //         console.log(i);
 //     }
-
+// }
 
 for (let i = 1; i <= 100; i++) {
     if (i % 3 === 0 && i % 5 === 0) {
@@ -38,3 +39,196 @@ for (let i = 1; i <= 100; i++) {
         console.log(i);
     }
 }
+
+// Part 2: Prime Time
+// Now we will move onto something slightly more complex.
+// Context: A prime number is any whole number greater than 1 that cannot be exactly divided by any whole number other than itself and 1. For example, 
+// the number 5 is prime because it cannot be divided by 4, 3, or 2; it can only be divided by itself (5) and 1. Similarly, the numbers 7 and 11 are prime. 
+// As numbers become larger, determining whether or not they are prime is increasingly difficult, but loops make this process relatively easy!
+// Write a script that accomplishes the following:
+
+
+// Declare an arbitrary number, n.
+// Declare an arbitrary number
+// let n = 5;
+// let nextNumber = n + 1;
+
+//   // Check if candidate can be divided evenly
+//   for (let i = 2; i < nextNumber; i++) {
+
+//     // If divisible, it is not prime
+//     if (nextNumber % i === 1 && nextNumber % i === 0) {
+//       console.log(nextNumber, 'it is not prime');
+//     }
+
+//  // If the number is prime, print it and stop the search
+//   if (nextNumber % i >= 1) {
+//     console.log("the number is not prime:", n , "The next number is: ", nextNumber);
+
+// } 
+
+// // if (nextNumber % nextNumber > 1) //|| (nextNumber % nextNumber !(=== 1)) 
+
+// //  console.log("The number is not prime: " + nextNumber);
+
+//   }
+
+let n = 5;
+
+// Check if n is prime
+
+let nIsPrime = true;
+
+for (let i = 2; i < n; i++) {
+
+    if (n % i === 0) {
+        nIsPrime = false;
+    }
+}
+
+// Print result for n
+if (nIsPrime && n > 1) {
+    console.log(n, "is a PRIME number");
+
+} else {
+    console.log(n, "is NOT a prime number");
+}
+
+// Find the next prime number
+
+let nextNumber = n + 1;
+
+while (true) {
+    let nextNumberIsPrime = true;
+
+    // Check candidate number
+    for (let i = 2; i < nextNumber; i++) {
+        if (nextNumber % i === 0) {
+            nextNumberIsPrime = false;
+
+        }
+    }
+
+    // If next prime found
+    if (nextNumberIsPrime && nextNumber > 1) {
+        console.log("The next prime number is:", nextNumber);
+
+        break;
+    }
+
+    // Try next number
+    nextNumber++;
+}
+// As soon as you find the prime number, log that number and exit the loop.
+// Continuing with the example above, if n is equal to 4, your loop should log 5. Similarly, if n is 5, it should log 7, and if n is 9, it should log 11.
+// Test your loop with higher numbers and reference an online prime number table to determine the accuracy of your code.
+// Be careful! If you set n to a number too large, your loop could take a long time to process.
+
+// PART 3: FEELING LOOPY
+
+// As a final task, solve the following practical problem regarding string processing.
+// Context: A CSV file, or “Comma-Separated Values” file is traditionally used to store tabular data.
+// You may be familiar with CSVs through past use of programs such as Microsoft Excel or Google Sheets.
+// While each of these programs save their data in different formats to preserve style (e.g., font color or cell backgrounds),
+// at their core, they are storing CSV data.
+
+// CSV data looks like this:
+
+// ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26
+// Not very nice to look at. The “\n” is an escaped Line Feed, which indicates that the following data should begin on a new line, as follows:
+
+// ID,Name,Occupation,Age
+// 42,Bruce,Knight,41
+// 57,Bob,Fry Cook,19
+// 63,Blaine,Quiz Master,58
+// 98,Bill,Doctor’s Assistant,26
+
+
+//INPUT FIRST DATA SET
+let csv = "ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26";
+
+
+//INPUT SECOND DATA SET
+// let csv ="Index,Mass (kg),Spring 1 (m),Spring 2 (m)\n1,0.00,0.050,0.050\n2,0.49,0.066,0.066\n3,0.98,0.087,0.080\n4,1.47,0.116,0.108\n5,1.96,0.142,0.138\n6,2.45,0.166,0.158\n7,2.94,0.193,0.174\n8,3.43,0.204,0.192\n9,3.92,0.226,0.205\n10,4.41,0.238,0.232";
+
+console.log(csv);
+
+
+// As you may have guessed, these values being “comma-separated” means that each comma is also a delimiter.
+// This is why this type of data is traditionally viewed in tables. Here is how the data looks once fully parsed:
+
+// ID Name   Occupation         Age
+// 42 Bruce  Knight             41
+// 57 Bob    Fry Cook           19
+// 63 Blaine Quiz Master        58
+// 98 Bill   Doctor’s Assistant 26
+
+// Your task is to write a script that accomplishes the following:
+let i = 0;
+let allData = [];
+let aRow = [];
+let aWord = "";
+
+// Loop through the characters of a given CSV string.
+// Store each “cell” of data in a variable.
+// When you encounter a comma, move to the next cell.
+for (; i < csv.length; i++) {
+
+    if (csv[i] === ",") {
+        aRow.push(aWord);
+        aWord = "";
+        // When you encounter the “\r\n” sequence, move to the next “row.”
+    } else {
+        if (csv[i] !== "\n") {
+            aWord = aWord + csv[i];
+        }
+    }
+    // Log each row of data.
+    // You do not need to format the data, the following works well.
+    // console.log(cell1, cell2, cell3, cell4);
+    if (csv[i] === "\n" || i === csv.length - 1) {
+        aRow.push(aWord);
+        allData.push(aRow);
+        aRow = [];
+        aWord = "";
+    }
+}
+
+// You can make the following assumptions:
+
+// There will only be 4 cells per row.
+// There will be no escaped characters other than “\n”.
+// Use the example string provided above to test your program. Once you are confident it is working correctly,
+// try the following string to see if your program works properly with other data.
+console.log(aRow);
+console.log("\n");
+console.log(allData);
+
+/* OUTPUT FIRST DATA SET:
+[
+ ["ID", "Name", "Occupation", "Age"],
+ ["42", "Bruce", "Knight", "41"],
+ ["57", "Bob", "Fry Cook", "19"],
+ ["63", "Blaine", "Quiz Master", "58"],
+ ["98", "Bill", "Doctor’s Assistant", "26"]
+]
+ */
+
+// Index,Mass (kg),Spring 1 (m),Spring 2 (m)\n1,0.00,0.050,0.050\n2,0.49,0.066,0.066\n3,0.98,0.087,0.080\n4,1.47,0.116,0.108\n5,1.96,0.142,0.138\n6,2.45,0.166,0.158\n7,2.94,0.193,0.174\n8,3.43,0.204,0.192\n9,3.92,0.226,0.205\n10,4.41,0.238,0.232
+// csv ="Index,Mass (kg),Spring 1 (m),Spring 2 (m)\n1,0.00,0.050,0.050\n2,0.49,0.066,0.066\n3,0.98,0.087,0.080\n4,1.47,0.116,0.108\n5,1.96,0.142,0.138\n6,2.45,0.166,0.158\n7,2.94,0.193,0.174\n8,3.43,0.204,0.192\n9,3.92,0.226,0.205\n10,4.41,0.238,0.232";
+
+/* OUTPUT SECOND DATA SET:
+[
+  [ 'Index', 'Mass (kg)', 'Spring 1 (m)', 'Spring 2 (m)' ],
+  [ '1', '0.00', '0.050', '0.050' ],
+  [ '2', '0.49', '0.066', '0.066' ],
+  [ '3', '0.98', '0.087', '0.080' ],
+  [ '4', '1.47', '0.116', '0.108' ],
+  [ '5', '1.96', '0.142', '0.138' ],
+  [ '6', '2.45', '0.166', '0.158' ],
+  [ '7', '2.94', '0.193', '0.174' ],
+  [ '8', '3.43', '0.204', '0.192' ],
+  [ '9', '3.92', '0.226', '0.205' ],
+  [ '10', '4.41', '0.238', '0.232' ]
+]
+ */
