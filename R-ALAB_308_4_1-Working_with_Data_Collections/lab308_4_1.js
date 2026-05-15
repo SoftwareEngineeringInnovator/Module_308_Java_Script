@@ -71,17 +71,25 @@ let csvResult = "ID,Name,Occupation,Age";
 // Use map() to transform each object into a CSV row
 let csvRows = finalResult.map(function (employee) {
 
-// Create one CSV row manually
+// Create CSV row
 return ( employee.id + "," + 
     employee.name + "," + 
     employee.occupation + "," + 
     employee.age ); });
 
-// Add all rows separated by \n
+// Separate rows by LF \n
  
 csvResult += "\\n" + csvRows.join("\\n");
 
-// Display final CSV string
+// Display CSV format
 
 console.log('let csv = "' + csvResult + '";');
+
+
+
+
+
+
+
+
 
