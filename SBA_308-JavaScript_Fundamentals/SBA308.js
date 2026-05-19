@@ -122,7 +122,7 @@ function findAssignment(assignments, assignmentID) {
 
   for (let i = 0; i < assignments.length; i++) {
     if (assignments[i].id === assignmentID) {
-      console.log("✅ Success! Found assignment:", assignments[i].name);
+      console.log("Success! Found assignment:", assignments[i].name);
       found = true; 
       break; // Stop the loop immediately because we found what we wanted
     }
@@ -130,7 +130,7 @@ function findAssignment(assignments, assignmentID) {
 
   // If the loop finished completely and 'found' is still false...
   if (found === false) {
-    console.log("❌ Result: No assignment found with ID:", assignmentID);
+    console.log("Result: No assignment found with ID:", assignmentID);
   }
 }
 
