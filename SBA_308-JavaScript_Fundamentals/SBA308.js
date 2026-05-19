@@ -113,3 +113,32 @@ try {
   // assignments: [
   // Result: Course: "Invalid Course ID."
 }
+
+// FUNCTION TO FIND ASSIGNMENT
+
+function findAssignment(assignments, assignmentID) {
+  // Create a tracking variable to see if we ever found a match
+  let found = false;
+
+  for (let i = 0; i < assignments.length; i++) {
+    if (assignments[i].id === assignmentID) {
+      console.log("✅ Success! Found assignment:", assignments[i].name);
+      found = true; 
+      break; // Stop the loop immediately because we found what we wanted
+    }
+  }
+
+  // If the loop finished completely and 'found' is still false...
+  if (found === false) {
+    console.log("❌ Result: No assignment found with ID:", assignmentID);
+  }
+}
+
+// 3. Simple Shorter Validation
+console.log("--- RUNNING QUICK VALIDATION ---");
+
+// Test Case A: Look for an ID that exists
+findAssignment(AssignmentGroup, 2);
+
+// Test Case B: Look for an ID that does not exist
+findAssignment(AssignmentGroup, 99);
