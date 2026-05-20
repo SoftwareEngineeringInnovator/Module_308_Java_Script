@@ -12,7 +12,7 @@ const AssignmentGroup = {
   group_weight: 25,
   assignments: [
     {
-      id: 1,
+      id: 4,
       name: "Declare a Variable",
       due_at: "2023-01-25",
       points_possible: 50
@@ -89,10 +89,10 @@ function validateCourse(course, group) {
 // TESTING THE VALIDATION FUNCTION
 console.log("Validating COURSE and GROUP ID");
 try {
-  
+
   validateCourse(CourseInfo, AssignmentGroup);
-  
-  
+
+
   console.log("Course is valid.");
   // Result by using proper course_id 451
   // id: 12345,
@@ -103,7 +103,7 @@ try {
   // Result: Course is valid.
 
 } catch (error) {
-  
+
   console.error(`Course: "${error.message}"`);
   // Result by updating course_id from 451 to  452
   // id: 12345,
@@ -117,28 +117,26 @@ try {
 // FUNCTION TO FIND ASSIGNMENT
 
 function findAssignment(assignments, assignmentID) {
-  // Create a tracking variable to see if we ever found a match
-  let found = false;
 
-  for (let i = 0; i < assignments.length; i++) {
-    if (assignments[i].id === assignmentID) {
-      console.log("Success! Found assignment:", assignments[i].name);
-      found = true; 
-      break; // Stop the loop immediately because we found what we wanted
+  // Loop through assignment object list
+  for (const assignment of assignments) {
+
+    // Check assignment's IDs
+    if (assignment.id === assignmentID) {
+      console.log("Assignment Found, name: ", assignment.name);
+      return;
+      //  Results with CORRECT assigmentID 
+      //  Assignment Validation:
+      //  Assignment Write a Function Found assignment.
     }
   }
-
-  // If the loop finished completely and 'found' is still false...
-  if (found === false) {
-    console.log("Result: No assignment found with ID:", assignmentID);
-  }
+  console.log("Assignment Not Found with ID:", assignmentID);
+  //  Results with INCORRECT assigmentID 99
+  // Assignment Validation:
+  // Assignment Write a Function Found assignment.
 }
 
-// 3. Simple Shorter Validation
-console.log("--- RUNNING QUICK VALIDATION ---");
+// Validation
+console.log("Assignment Validation:");
+findAssignment(AssignmentGroup.assignments, 2);
 
-// Test Case A: Look for an ID that exists
-findAssignment(AssignmentGroup, 2);
-
-// Test Case B: Look for an ID that does not exist
-findAssignment(AssignmentGroup, 99);
