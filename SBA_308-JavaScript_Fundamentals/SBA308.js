@@ -87,6 +87,7 @@ function validateCourse(course, group) {
 }
 
 // TESTING THE VALIDATION FUNCTION
+
 console.log("Validating COURSE and GROUP ID");
 try {
 
@@ -136,7 +137,39 @@ function findAssignment(assignments, assignmentID) {
   // Assignment Write a Function Found assignment.
 }
 
-// Validation
-console.log("Assignment Validation:");
-findAssignment(AssignmentGroup.assignments, 2);
 
+// FUNCTION TO CHECK VALID DATA - number or string
+
+function validData(score, pointsPossible) {
+
+  // Use typeof() and OR to evaluate if the score is not a number, OR points is not a number OR points equals 0
+  if (typeof score !== "number" || typeof pointsPossible !== "number" || pointsPossible === 0) {
+    return false;
+  }
+
+  return true;
+}
+
+// TESTING THE VALIDATION FUNCTION
+
+// console.log("DATA VALIDATION TESTS:");
+// DATA VALIDATION TESTS:
+
+// Case 1: proper data -True
+// console.log("Numbers:", validData(85, 100));
+// Result - Numbers: true
+
+// Case 2: one of the score is a string - False
+// console.log("String:", validData("85", 100));
+// Result - String: false
+
+// console.log("String:", validData(85, "100"));
+// Result - String: false
+
+// Case 3: Zero points possible- False
+// console.log("0 Points Possible:", validData(85, 0));
+// Result - 0 Points Possible: false
+
+// Case 4: Score 0 - True
+// console.log("Score 0", validData(0, 100));
+// Result - Score 0 true
