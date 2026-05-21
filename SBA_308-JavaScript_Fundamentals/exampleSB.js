@@ -96,43 +96,49 @@ const LearnerSubmissions = [
 //   return result;
 // }
 
-const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
+// const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
-console.log("All Student Result", result);
+// console.log("All Student Result", result);
 
 function getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions) {
-  let stuResult = [];
+  let studentResult = [];
 
   try {
     // let learnerReport = {};
-    if (CourseInfo.id !== AssignmentGroup) { // 1. CourseIn compare IDs
-      throw "Invalid Course ID'";
+    if (CourseInfo.id !== AssignmentGroup.course_id) { // 1. CourseIn compare IDs
+      throw new error ("Course ID Is Invalid!");
     }
-
 
     // loop assigments
     //submit assisgment id
     // Function to loop throught assigment groups
+    // To get the latennes 10% deduct from submission score
 
-    let sumAssigmentScores = 0;
-    let sumPossiblePoints = 0;
-    let isNewID = 0;
+    let assigmentScores = 0;
+    let possiblePoints = 0;
+    let newID = 0;
     let learnerReport = {};
 
-
-    // let totalAvg = sumAssigmentScores / sumPossiblePoints
-
-    for (let i = 0; i < LearnerSubmissions.length(); i++) {
-      // console.log("DFA");
+    // let totalAvg = assigmentScores / possiblePoints
+    for (let i = 0; i < LearnerSubmissions.length; i++) {
       // break
 
       let aveAssigment = 0;
 
       // calling function to get specific assigment information for Posible Points
-      let assigmentInfo = getAssigmentInfo(AssignmentGroup.assignment, LearnerSubmissions[i].assignment_id);
+      let assigmentInfo = getAssigmentInfo(AssignmentGroup.assignments, LearnerSubmissions[i].assignment_id);
       // console.log("assigmentInfo", assigmentInfo);
       // console.log(LearnerSubmissions[i].assignment_id);
       // break;
+
+      // Validate if assigment is due in the future
+      if (new Date(assigmentInfo.due_at) > new Date() || assigmentInfo.points_possible == 0) {
+        continue;
+      }
+
+      if (assigmentInfo.points_possible == 0) {
+        continue;
+      }
 
       // console.log("Submission.score:", LearnerSubmissions[0].submission.score);
       // if (AssignmentGroup.assignment[0].id == LearnerSubmissions[i].assignment_id) { 
@@ -142,48 +148,75 @@ function getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions) {
       //Calculate whole assigmentaverage
 
 
-      if (isNewID != LearnerSubmissions[i].learner_id) {
+      if (newID != LearnerSubmissions[i].learner_id) {
         if (i == 0) {
           //first time learnerReports is empty then do nothing
         } else {
-          stuResult.splice(1, 0, learnerReport)
+          studentResult.splice(1, 0, learnerReport)
           learnerReport = {};
         }
-        isNewID = LearnerSubmissions[i].learner_id;
-        learnerReport["id"] = isNewID;
-        learrnerReport["avg"] = 0;
-        sumAssigmentScores = 0;
-        sumPossiblePoints = 0;
+        newID = LearnerSubmissions[i].learner_id;
+        learnerReport["id"] = newID;
+        learnerReport["avg"] = 0;
+        assigmentScores = 0;
+        possiblePoints = 0;
       }
-// caldulate whole total assigment average
-      sumAssigmentScores += LearnerSubmissions[i].submission.score;
-      sumPossiblePoints += assigmentInfo.points_possible;
-      let totalAvg = sumAssigmentScores / sumPossiblePoints
 
-      learrnerReport.avg = totalAvg;
-      // Create Variable
+      //Finding if submitted late -> submitted date > assigment due date
+      let lateness = false;
+      if (new Date(LearnerSubmissions[i].submission.submitted_at) > new Date(assigmentInfo.due_at)) {
+        lateness = true;
+      }
 
-      //Calculate single assigmentaverage
-      averageAssigment = LearnerSubmissions[i].submission.score / assigmentInfo.points_possible
-      //ID 1: averageAssigment
+      //Calculate single assigmentaverage / max points and subtract lateness
+      let singleAssigmentScore = 0;
 
+      if (lateness) {
+        singleAssigmentScore = (LearnerSubmissions[i].submission.score - (assigmentInfo.points_possible * 0.1));
+
+        // averageAssigment = (LearnerSubmissions[i].submission.score - (assigmentInfo.points_possible * 0.1)) / assigmentInfo.points_possible;
+        //ID 1: averageAssigment
+      } else {
+        singleAssigmentScore = LearnerSubmissions[i].submission.score;
+
+        // averageAssigment = LearnerSubmissions[i].submission.score / assigmentInfo.points_possible;
+        //ID 1: averageAssigment
+      }
+
+      averageAssigment = singleAssigmentScore / assigmentInfo.points_possible;
       const assigmentID = assigmentInfo.id;
-      learnerReport["assigmentID"] = averageAssigment;
+      learnerReport[assigmentID] = averageAssigment.toFixed(2);
 
       // console.log("Single Resultt", learnerReport);
 
+      // caldulate whole total assigment average
+      assigmentScores += singleAssigmentScore;
+      possiblePoints += assigmentInfo.points_possible;
+      let totalAvg = assigmentScores / possiblePoints
+
+      // learrnerReport.avg = totalAvg;
+      // To remove decimal points
+      learnerReport.avg = totalAvg.toFixed(2);
+
+
+      // Create Variable
       //collect all students reports
-      // stuResult.push(learnerReport);
-      learnerReport = {};
+      // studentResult.push(learnerReport);
+      // learnerReport = {};
+      if ((i + 1) == LearnerSubmissions.length) {
+        studentResult.splice(1, 0, learnerReport);
+      }
     }
-    return stuResult;
+
+
+    return studentResult;
   } catch (err) {
-    console.log(Error);
+    console.log("Error Encountered:", err.message);
   }
 }
 
 // Get single assigment information - Possible Points
-functiongetAssigmentInfo(assigmentInformation, submitID) {
+function getAssigmentInfo(assigmentInformation, submitID) {
   let assigment = {}
   for (let idx in assigmentInformation) { // for (let idx = 0; i < assigmentInformation.length; i++)
     // console.log("aInfor" , assigmentInformation);
@@ -193,5 +226,8 @@ functiongetAssigmentInfo(assigmentInformation, submitID) {
       // retrun assigmentInformation[idx];
     }
   }
+  return assigment;
 }
-return assigment;
+
+const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
+console.log("All Student Result:", result);
